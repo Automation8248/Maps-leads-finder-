@@ -6,7 +6,10 @@ import random
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
-CITY = "usa" # Aap apni city yahan likh sakte hain
+
+# --- YAHAN LOCATION CHANGE KAREIN ---
+CITY = "New York" 
+# ------------------------------------
 
 def get_coffee_shop():
     # Google Places API URL
@@ -24,8 +27,8 @@ def get_coffee_shop():
         place_id = shop['place_id']
         map_link = f"https://www.google.com/maps/place/?q=place_id:{place_id}"
         
-        return f"☕ *Daily Coffee Recommendation* ☕\n\nShop: {name}\nRating: ⭐{rating}\nAddress: {address}\n\nLink: {map_link}"
-    return "No shops found!"
+        return f"☕ *Daily Coffee Recommendation in {CITY}* ☕\n\nShop: {name}\nRating: ⭐{rating}\nAddress: {address}\n\nLink: {map_link}"
+    return f"No shops found in {CITY}!"
 
 def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
