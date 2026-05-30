@@ -1,1 +1,32 @@
+name: Daily Coffee Recommendation Bot
 
+on:
+  schedule:
+    # Yeh har roz subah 8:00 AM IST (2:30 AM UTC) par chalega
+    - cron: '30 2 * * *'
+  workflow_dispatch: # Isse aap manually bhi run kar sakte hain button daba kar
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Coffee Bot script
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py # Agar aapki file ka naam kuch aur hai to wo likhein
